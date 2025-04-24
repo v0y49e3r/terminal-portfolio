@@ -1,0 +1,75 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "IBM Plex Mono", monospace;
+  cursor: text;
+}
+
+body {
+  background-color: #2c3539;
+  color: lime;
+  font-size: 15px;
+  font-weight: 300;
+}
+
+.ascii-name {
+  color: #fbcb0a;
+  font-size: 0.7 vw;
+  margin-top: 20px;
+}
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.input-command {
+  background-color: transparent;
+  border: none;
+  outline: none;
+  width: 100%;
+  /* padding-left: 15px; */
+  padding: 10px;
+  color: lime;
+  font-weight: 600;
+  font-size: 16px;
+  margin-left: 10px;
+}
+.input-text {
+  color: lime;
+}
+.message-text {
+  font-size: 16px;
+  font-weight: 400;
+  margin: 20px 0;
+}
+
+.input-label {
+  color: #fbcb0a;
+}
+.help-text {
+  font-size: 17px;
+  font-weight: 500;
+  color: #00ffd9;
+}
+
+/* output */
+
+.command-output {
+  margin: 15px 0;
+  padding-left: 20px;
+}
+
+.data-dt {
+  font-size: 17px;
+  font-weight: 600;
+  margin-top: 10px;
+  text-transform: lowercase;
+}
+.data-dd {
+  margin-top: 5px;
+  margin-left: 20px;
+}
+.about-text {
+  font-weight: 400;
+}
