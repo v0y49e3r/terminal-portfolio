@@ -1,25 +1,17 @@
 import init from "./commands.js";
-
+const github = "https://github.com/v0y49e3r";
 (async () => {
   const {
     helpSectionHTML,
     aboutSectionHTML,
     githubSectionHTML,
-    whoAmISectionHTML,
+    // whoAmISectionHTML,
     contactSectionHTML,
     ifConfigSectionHTML,
-    skillsSectionHTML,
-    projectsSectionHTML,
-    achievementsSectionHTML,
-    website,
-    websiteSectionHTML,
   } = await init();
 
   const command = document.getElementById("command");
   const commandOutput = document.getElementById("command-output");
-
-  // Hiển thị mặc định nếu cần (VD: ifConfigSectionHTML)
-  commandOutput.innerHTML = ifConfigSectionHTML;
 
   const commandHistory = [];
   let historyIndex = 0;
@@ -55,7 +47,7 @@ import init from "./commands.js";
   const redirectToGUIWebsite = () => {
     setTimeout(() => {
       const anchor = document.createElement("a");
-      anchor.href = website;
+      anchor.href = github;
       anchor.target = "_blank";
       anchor.click();
     }, 2000);
@@ -100,28 +92,28 @@ import init from "./commands.js";
         showCommandOutput(helpSectionHTML);
         addCommandToHistory();
         break;
-      case "whoami":
-        showCommandOutput(whoAmISectionHTML);
-        addCommandToHistory();
-        break;
+      // case "whoami":
+      //   showCommandOutput(whoAmISectionHTML);
+      //   addCommandToHistory();
+      //   break;
       case "about":
         showCommandOutput(aboutSectionHTML);
         addCommandToHistory();
         break;
-      case "skills":
-        showCommandOutput(skillsSectionHTML);
+      case "ifconfig":
+        showCommandOutput(ifConfigSectionHTML);
         addCommandToHistory();
         break;
-      case "projects":
-        showCommandOutput(projectsSectionHTML);
-        addCommandToHistory();
-        break;
+      // case "portfolio":
+      //   showCommandOutput(portfolioSectionHTML);
+      //   addCommandToHistory();
+      //   break;
       case "achievements":
         showCommandOutput(achievementsSectionHTML);
         addCommandToHistory();
         break;
-      case "website":
-        showCommandOutput(websiteSectionHTML);
+      case "github":
+        showCommandOutput(githubSectionHTML);
         addCommandToHistory();
         redirectToGUIWebsite();
         break;
@@ -143,6 +135,7 @@ import init from "./commands.js";
   };
 
   const evaluateCommandInput = (event) => {
+    console.log(event.key);
     if (downKeyIsPressed(event)) {
       getPreviouslyExecutedCommand();
       return;
@@ -164,6 +157,46 @@ import init from "./commands.js";
       emptyTerminal();
     }
   };
+
+  //tab for auto complete
+  const commands = [
+    "help",
+    "about",
+    "whoami",
+    "github",
+    "ifconfig",
+    "achievements",
+    "contact",
+    "clear",
+  ];
+  const introElement = document.querySelector(".intro");
+  const text = `"Just started coding 🧑‍💻"<br><br>"Aspiring hacker 💻✨"<br><br>"Learning Networking & Linux 🌐🐧"`;
+  let index = 0;
+  let currentText = "";
+  let typingSpeed = 100;
+
+  function typeText() {
+    if (index < text.length) {
+      currentText += text.charAt(index);
+      introElement.innerHTML = currentText;
+      index++;
+      setTimeout(typeText, typingSpeed);
+    } else {
+      setTimeout(() => {
+        index = 0;
+        currentText = "";
+        introElement.innerHTML = "";
+        typeText();
+      }, 2000);
+    }
+  }
+  typeText();
+
+  function blinkCursor() {
+    introElement.classList.add("blinking-cursor");
+  }
+
+  typeText();
 
   command.addEventListener("keydown", evaluateCommandInput);
 })();

@@ -2,7 +2,7 @@ let helpSectionHTML,
   aboutSectionHTML,
   githubSectionHTML,
   ifConfigSectionHTML,
-  whoamiSectionHTML,
+  // whoamiSectionHTML,
   contactSectionHTML;
 
 //about
@@ -14,22 +14,21 @@ const getAbout = () => {
     "</p></div>";
   return renderData;
 };
-
 //whoami
 
-const getWhoami = () => {
-  let renderData = '<div class="command-result">';
-  const yep = [
-    "Just started coding 🧑‍💻",
-    "Aspiring hacker 💻✨",
-    "Learning Networking & Linux 🌐🐧",
-  ];
-  for (let i = 0; i < yep.length; ++i) {
-    renderData += '<li class="data-li">' + yep[i] + "</li>";
-  }
-  renderData += "</div>";
-  return renderData;
-};
+// const getWhoami = () => {
+//   let renderData = '<div class="command-result"><ul class="data-list">';
+//   const yep = [
+//     "Just started coding 🧑‍💻",
+//     "Aspiring hacker 💻✨",
+//     "Learning Networking & Linux 🌐🐧",
+//   ];
+//   for (let i = 0; i < yep.length; ++i) {
+//     renderData += '<li class="data-li">' + yep[i] + "</li>";
+//   }
+//   renderData += "</ul></div>";
+//   return renderData;
+// };
 
 //ifconfig
 const url = "https://ipinfo.io/json";
@@ -75,7 +74,7 @@ const getIfConfig = async () => {
 const getHelp = () => {
   let renderData = '<div class="command-result"><dl>';
   const availableCommands = [
-    { command: "whoami", description: "What i do" },
+    // { command: "whoami", description: "What i do" },
     { command: "about", description: "Know about me" },
     { command: "github", description: "Link to my github" },
     { command: "ifconfig", description: "Just ipconfig" },
@@ -149,7 +148,7 @@ const init = async () => {
   const helpSectionHTML = getHelp();
   const aboutSectionHTML = getAbout();
   const githubSectionHTML = getGithub();
-  const whoamiSectionHTML = getWhoami();
+  // const whoamiSectionHTML = getWhoami();
   const contactSectionHTML = getContact();
   const ifConfigSectionHTML = await getIfConfig();
 
@@ -157,10 +156,10 @@ const init = async () => {
     helpSectionHTML,
     aboutSectionHTML,
     githubSectionHTML,
-    whoamiSectionHTML,
+    // whoamiSectionHTML,
     contactSectionHTML,
     ifConfigSectionHTML,
   };
 };
 
-export { github, init };
+export default init;
