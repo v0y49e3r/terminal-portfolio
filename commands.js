@@ -1,5 +1,3 @@
-import { IpDetails, fetchData } from "./getIpdetails.js";
-
 let helpSectionHTML,
   aboutSectionHTML,
   githubSectionHTML,
@@ -34,9 +32,29 @@ const getWhoami = () => {
 };
 
 //ifconfig
-const getIfConfig = () => {
+const url = "https://ipinfo.io/json";
+
+let IpDetails = [];
+
+const getIPDetails = async () => {
+  try {
+    const response = await fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        IpDetails.push(data);
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const getIfConfig = async () => {
+  if (IpDetails.length === 0) {
+    await getIPDetails();
+  }
   const IP = IpDetails[0];
-  console.log(IpDetails.length);
+  console.log(IP);
+  console.log(IP.ip);
   let renderData = '<div class="command-result"><ul class="data-list">';
   renderData += '<li class="data-li">🌐 Ip: ' + IP.ip + "</li>";
   renderData += '<li class="data-li">📡 Hostname: ' + IP.hostname + "</li>";
@@ -49,6 +67,10 @@ const getIfConfig = () => {
   return renderData;
 };
 
+// them cai loi object Promise ( chatgpt )
+(async () => {
+  ifConfigSectionHTML = await getIfConfig();
+})();
 //help
 const getHelp = () => {
   let renderData = '<div class="command-result"><dl>';
@@ -56,7 +78,7 @@ const getHelp = () => {
     { command: "whoami", description: "What i do" },
     { command: "about", description: "Know about me" },
     { command: "github", description: "Link to my github" },
-    { command: "ipconfig", description: "Just ipconfig" },
+    { command: "ifconfig", description: "Just ipconfig" },
     { command: "clear", description: "Clear termianl" },
     { command: "Contact", description: "Please contact to me!!!" },
   ];
@@ -75,13 +97,13 @@ const getHelp = () => {
 };
 
 //github
+// URL GitHub của bạn
 const github = "https://github.com/v0y49e3r";
 const getGithub = () => {
   const renderData =
-    '<div class="command-result">Wait...for connect to my Github <a href ="' +
+    '<div class="command-result">Wait... while connecting to my GitHub <a href="' +
     github +
-    '">' +
-    "</div>";
+    '" target="_blank">here</a></div>';
   return renderData;
 };
 
@@ -108,18 +130,37 @@ const getContact = () => {
   return renderData;
 };
 
-//render data
-helpSectionHTML = getHelp();
-whoamiSectionHTML = getWhoami();
-githubSectionHTML = getGithub();
-contactSectionHTML = getContact();
-ifConfigSectionHTML = getIfConfig();
-aboutSectionHTML = getAbout();
-export {
-  helpSectionHTML,
-  aboutSectionHTML,
-  githubSectionHTML,
-  whoamiSectionHTML,
-  ifConfigSectionHTML,
-  contactSectionHTML,
+// //render data
+// helpSectionHTML = getHelp();
+// whoamiSectionHTML = getWhoami();
+// githubSectionHTML = getGithub();
+// contactSectionHTML = getContact();
+// ifConfigSectionHTML = getIfConfig();
+// aboutSectionHTML = getAbout();
+// export {
+//   helpSectionHTML,
+//   aboutSectionHTML,
+//   githubSectionHTML,
+//   whoamiSectionHTML,
+//   ifConfigSectionHTML,
+//   contactSectionHTML,
+// };
+const init = async () => {
+  const helpSectionHTML = getHelp();
+  const aboutSectionHTML = getAbout();
+  const githubSectionHTML = getGithub();
+  const whoamiSectionHTML = getWhoami();
+  const contactSectionHTML = getContact();
+  const ifConfigSectionHTML = await getIfConfig();
+
+  return {
+    helpSectionHTML,
+    aboutSectionHTML,
+    githubSectionHTML,
+    whoamiSectionHTML,
+    contactSectionHTML,
+    ifConfigSectionHTML,
+  };
 };
+
+export { github, init };
